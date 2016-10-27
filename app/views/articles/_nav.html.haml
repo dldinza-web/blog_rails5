@@ -1,0 +1,8 @@
+%nav
+  - unless current_page?(controller: 'articles', action: 'index')
+    %a{ href: articles_path } All
+
+  - if  !(params[:controller].eql?('articles') && params[:action].eql?('create')) and !(params[:controller].eql?('articles') && params[:action].eql?('new'))
+    %a{ href: new_article_path } New article
+
+

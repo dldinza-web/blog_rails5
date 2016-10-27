@@ -1,4 +1,8 @@
 class ArticlesController < ApplicationController
+  def index
+    @articles = Article.all
+  end
+
   def new
   end
 
@@ -9,7 +13,7 @@ class ArticlesController < ApplicationController
       if @article.save
         format.html { redirect_to @article }
       else
-        format.html { redirect_to :new }
+        format.html { render :new }
       end
     end
   end

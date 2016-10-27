@@ -1,0 +1,24 @@
+= render 'nav'
+
+%h1
+  Listing articles
+
+%strong
+  Total of items:
+  = @articles.size
+
+%table{ border: 1 }
+  %tbody
+    %tr
+      %th Title
+      %th Text
+      %th Actions
+
+    - @articles.each do |a|
+      %tr
+        %td
+          = a.title
+        %td
+          = a.text
+        %td
+          = link_to "Show", article_path(a)
