@@ -1,0 +1,28 @@
+= render 'nav'
+
+%h1
+  Listing articles
+
+%strong
+  Total of items:
+  = @articles.size
+
+%table{ border: 1 }
+  %tbody
+    %tr
+      %th Title
+      %th Text
+      %th{ colspan: 3 } Actions
+
+    - @articles.each do |a|
+      %tr
+        %td
+          = a.title
+        %td
+          = a.text
+        %td
+          = link_to "Show", article_path(a)
+        %td
+          = link_to "Edit", edit_article_path(a)
+        %td
+          = link_to "Delete", article_path(a), method: :delete, data: { confirm: 'Are you sure?' }
