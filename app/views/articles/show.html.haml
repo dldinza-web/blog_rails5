@@ -7,3 +7,13 @@
 %p
   %strong Text:
   = @article.text
+
+- if @article.comments.present?
+  %h2 Comments
+  = render @article.comments
+
+%h2 Add a comment:
+= render 'comments/form'
+
+= link_to 'Edit', edit_article_path(@article)
+= link_to 'BAck', articles_path
