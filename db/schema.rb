@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161114235020) do
+ActiveRecord::Schema.define(version: 20161206173945) do
 
   create_table "articles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "title",                    null: false
@@ -18,6 +18,20 @@ ActiveRecord::Schema.define(version: 20161114235020) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.index ["title"], name: "index_articles_on_title", unique: true, using: :btree
+  end
+
+  create_table "aux_products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name"
+    t.decimal  "price",      precision: 10
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  create_table "aux_products_products", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "product_id",     null: false
+    t.integer "aux_product_id", null: false
+    t.index ["aux_product_id", "product_id"], name: "index_aux_products_products_on_aux_product_id_and_product_id", using: :btree
+    t.index ["product_id", "aux_product_id"], name: "index_aux_products_products_on_product_id_and_aux_product_id", using: :btree
   end
 
   create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -30,5 +44,25 @@ ActiveRecord::Schema.define(version: 20161114235020) do
     t.index ["commenter"], name: "index_comments_on_commenter", using: :btree
   end
 
+  create_table "pieces", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name"
+    t.decimal  "weight",     precision: 10
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  create_table "products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name"
+    t.text     "description", limit: 65535
+    t.string   "price",       limit: 4
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.string   "part_number"
+    t.decimal  "price_aux",                 precision: 10
+    t.integer  "article_id"
+    t.index ["article_id"], name: "index_products_on_article_id", using: :btree
+  end
+
   add_foreign_key "comments", "articles"
+  add_foreign_key "products", "articles"
 end
